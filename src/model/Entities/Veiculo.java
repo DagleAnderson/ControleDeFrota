@@ -1,16 +1,19 @@
 package model.Entities;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Veiculo{
+public class Veiculo implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 private Integer id;
   private String descricao;
-  private Date ano;
+  private String ano;
   private Double kmRodado;
   private String placa;
   private String chassi;
   private String renavam;
+  private Modelo modelo;
   
   
   public Veiculo() {
@@ -18,7 +21,7 @@ private Integer id;
   }
 
 
-public Veiculo(Integer id, String descricao, Date ano, Double kmRodado, String placa, String chassi, String renavam) {
+public Veiculo(Integer id, String descricao, String ano, Double kmRodado, String placa, String chassi, String renavam,Modelo modelo) {
 	this.id = id;
 	this.descricao = descricao;
 	this.ano = ano;
@@ -26,6 +29,7 @@ public Veiculo(Integer id, String descricao, Date ano, Double kmRodado, String p
 	this.placa = placa;
 	this.chassi = chassi;
 	this.renavam = renavam;
+	this.modelo = modelo;
 }
 
 
@@ -88,12 +92,12 @@ public void setDescricao(String descricao) {
 }
 
 
-public Date getAno() {
+public String getAno() {
 	return ano;
 }
 
 
-public void setAno(Date ano) {
+public void setAno(String ano) {
 	this.ano = ano;
 }
 
@@ -138,10 +142,23 @@ public void setRenavam(String renavam) {
 }
   
 
+public Modelo getModelo() {
+	return modelo;
+}
+
+
+public void setModelo(Modelo modelo) {
+	this.modelo = modelo;
+}
+
+
 @Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "";
-	}
+public String toString() {
+	return "Veiculo [id=" + id + ", descricao=" + descricao + ", ano=" + ano + ", kmRodado=" + kmRodado + ", placa="
+			+ placa + ", chassi=" + chassi + ", renavam=" + renavam + ", modelo=" + modelo.getDescricao()+", marca="+modelo.getMarca().getDescricao() + "]";
+}
+
+
+
   
 }
