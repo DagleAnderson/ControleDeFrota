@@ -155,7 +155,7 @@ public void setModelo(Modelo modelo) {
 @Override
 public String toString() {
 	return "Veiculo [id=" + id + ", descricao=" + descricao + ", ano=" + ano + ", kmRodado=" + kmRodado + ", placa="
-			+ placa + ", chassi=" + chassi + ", renavam=" + renavam + ", modelo=" + modelo.getDescricao()+", marca="+modelo.getMarca().getDescricao() + "]";
+			+ placa + ", chassi=" + chassi + ", renavam=" + renavam + ", modelo=" + modelo.getDescricao()+", marca="+modelo.getMarca().getDescricao() + "] \n";
 }
 
 

@@ -17,7 +17,7 @@ public class Program {
 		
 		Modelo md = new Modelo(1, "bitrem", new Marca(1,"Fiat"));
 		
-		List<Veiculo> veic = veiculoDao.findByModelo(md);
+		List<Veiculo> veic = veiculoDao.findAll();
 		
 		System.out.println(veic);
 	}

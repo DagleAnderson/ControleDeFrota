@@ -173,8 +173,46 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 	
 	@Override
 	public List<Veiculo> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        
+        try {
+        	 st = conn.prepareStatement(
+        	    		"SELECT veiculo.*,modelo.nome_mod as modelo,marca.nome_marca as marca FROM veiculo "
+        					    + "INNER JOIN modelo ON veiculo.modelo_id = modelo.id_mod " 
+        						+ "INNER JOIN marca ON modelo.marca_id = marca.id_marca");
+      
+        	 rs = st.executeQuery();
+        	 
+        	 List<Veiculo> veicList = new ArrayList<>();
+        	 
+        	 Map<String,Marca> mapMarca = new HashMap<>();
+        	 Map<Integer,Modelo> mapMod = new HashMap<>();
+        	 while(rs.next()){
+        		 Marca marca = mapMarca.get(rs.getString("marca"));
+					if(marca == null) {
+						marca = instantiateMarca(rs);
+						mapMarca.put(rs.getString("marca"), marca);
+					}
+					
+					Modelo mod = mapMod.get(rs.getInt("modelo_id"));
+					if(mod == null) {
+					    mod = instantiateModelo(rs,marca);
+						mapMod.put(rs.getInt("modelo_id"), mod);
+					}
+					
+					Veiculo obj = instantiateVeiculo(rs, mod, marca);
+					veicList.add(obj);
+				 }
+			
+				return veicList;	
+   	 
+        }catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally{
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 
