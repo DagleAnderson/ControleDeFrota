@@ -17,9 +17,11 @@ public class Program {
 		
 		Modelo md = new Modelo(1, "bitrem", new Marca(1,"Fiat"));
 		
-		List<Veiculo> veic = veiculoDao.findAll();
+		Veiculo veic = new Veiculo(null,"caminhão", "2000", 124.22,"asd123","1234536","asd123", md);
 		
-		System.out.println(veic);
+		veiculoDao.insert(veic);
+		
+		System.out.println(veic.getId());
 	}
 
 }

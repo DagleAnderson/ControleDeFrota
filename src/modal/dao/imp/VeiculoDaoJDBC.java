@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,43 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 	}
 	@Override
 	public void insert(Veiculo obj) {
-		// TODO Auto-generated method stub
+		 PreparedStatement st = null;
+		 ResultSet rs = null;
+		 
+			 try {
+				 st = conn.prepareStatement(
+						 " INSERT INTO veiculo "  
+				 		+"(descricao_veic,ano_veic,km_rodado_veic,placa_veic,chassi_veic,renavam_veic,modelo_id) "  
+				 		+" VALUES(?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				 
+				 		st.setString(1, obj.getDescricao());
+				 		st.setString(2,obj.getAno());
+				 		st.setDouble(3, obj.getKmRodado());
+				 		st.setString(4, obj.getPlaca());
+				 		st.setString(5, obj.getChassi());
+				 		st.setString(6, obj.getRenavam());
+				 		st.setInt(7, obj.getModelo().getId());
+				 		
+				 int rowsAffected = st.executeUpdate();
+				 	
+				 	if(rowsAffected> 0 ) {
+				 		rs = st.getGeneratedKeys();
+				 		if(rs.next()) {
+				 			int id = rs.getInt(1);
+				 			
+				 			obj.setId(id);
+				 		}
+				 	}else {
+				 		throw new DBException("Erro inesperado! Nenhum linha foi afetada");
+				 	}
+				 
+				 
+			} catch (SQLException e) {
+				throw new DBException(e.getMessage());
+			}finally {
+				DB.closeResultset(rs);
+				DB.closeStatement(st);
+			}
 		
 	}
 
