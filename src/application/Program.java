@@ -17,9 +17,12 @@ public class Program {
 		
 		Modelo md = new Modelo(1, "bitrem", new Marca(1,"Fiat"));
 		
-		Veiculo veic = new Veiculo(null,"caminhão", "2000", 124.22,"asd123","1234536","asd123", md);
 		
-		veiculoDao.insert(veic);
+		Veiculo veic = veiculoDao.findById(1);
+		veic.setAno("2015");
+		
+		veiculoDao.update(veic);
+
 		
 		System.out.println(veic.getId());
 	}
